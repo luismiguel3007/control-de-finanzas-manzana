@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control de Bendición de la Manzana: Un Encuentro con Jesús</title>
+  <!-- Google Fonts: Inter & Cinzel & Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <!-- Estilos principales -->
+  <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+
+  <!-- Alerta / Notificación Toast flotante -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- VISTA PÚBLICA (CONGREGACIÓN / PROYECCIÓN) -->
+  <div id="vistaPublica" class="public-view">
+    <!-- Barra Superior Pública -->
+    <header class="public-header">
+      <div class="public-brand">
+        <span class="public-logo-icon">⛪</span>
+        <div>
+          <h2 class="public-church-name">Comunidad Cristiana</h2>
+          <p class="public-church-sub">Un Encuentro con Jesús</p>
+        </div>
+      </div>
+      <div class="public-header-controls">
+        <button id="btnCambiarFondo" class="btn-theme-toggle" title="Alternar entre Pergamino Cálido y Modo Noche Solemne">
+          🎨 Cambiar Ambiente
+        </button>
+        <button id="btnAccesoPastoral" class="btn-pastoral-access" title="Ingreso exclusivo para pastores y tesorería">
+          Acceso Pastoral 🔐
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero / Campaña -->
+    <main class="public-content">
+      <div class="public-hero">
+        <div class="public-badge-meta">⏳ Meta: Junio 2027</div>
+        <h1 class="public-title">Campaña de Fe: La Manzana 🍎</h1>
+        <p class="public-subtitle">Compromiso de edificación hasta Junio 2027</p>
+
+        <!-- Versículo Aleatorio Dinámico -->
+        <div class="verse-card">
+          <span class="verse-quote-icon">“</span>
+          <p id="publicVersiculoTexto" class="verse-text">"Cada uno dé como propuso en su corazón: no con tristeza, ni por necesidad, porque Dios ama al dador alegre."</p>
+          <span id="publicVersiculoCita" class="verse-ref">— 2 Corintios 9:7</span>
+          <div class="verse-controls">
+            <button id="btnRotarVersiculo" class="btn-verse-next" title="Cambiar versículo bíblico de mayordomía">
+              📖 Siguiente Versículo
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Termómetro de Avance Principal -->
+      <section class="public-thermometer-section">
+        <div class="thermometer-header-public">
+          <span class="thermometer-tag">Termómetro de Avance</span>
+          <span id="pubPorcentajeBadge" class="thermometer-pct-pill">0% Alcanzado</span>
+        </div>
+
+        <!-- Barra Gigante / Termómetro Horizontal Animado -->
+        <div class="thermometer-giant-track">
+          <div id="pubTermometroFill" class="thermometer-giant-fill" style="width: 0%;">
+            <span id="pubTermometroTooltip" class="thermometer-tooltip">0%</span>
+          </div>
+        </div>
+
+        <div class="thermometer-labels-public">
+          <span>Inicio: S/ 0.00</span>
+          <span id="pubMesesRestantesChip" class="pub-months-chip">Calculando tiempo restante...</span>
+          <span id="pubMetaLabelFinal">Meta: S/ 0.00</span>
+        </div>
+      </section>
+
+      <!-- Tarjetas de Totales Públicos -->
+      <section class="public-cards-grid">
+        <div class="public-card public-card-raised">
+          <div class="public-card-icon">💰</div>
+          <div class="public-card-data">
+            <span class="public-card-label">Total Ofrendado a la Fecha</span>
+            <h2 id="pubTotalRecaudado" class="public-card-val">S/ 0.00</h2>
+            <p class="public-card-sub">Ofrendas y aportes confirmados</p>
+          </div>
+        </div>
+
+        <div class="public-card public-card-goal">
+          <div class="public-card-icon">🎯</div>
+          <div class="public-card-data">
+            <span class="public-card-label">Meta Final de la Iglesia</span>
+            <h2 id="pubTotalMeta" class="public-card-val">S/ 0.00</h2>
+            <p class="public-card-sub">Compromiso fijado hasta Junio 2027</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Público -->
+    <footer class="public-footer">
+      <p>Campaña de Edificación de Fe • "Un Encuentro con Jesús"</p>
+      <p class="public-footer-note">"Jehová te bendiga, y te guarde; Jehová haga resplandecer su rostro sobre ti..." — Números 6:24-25</p>
+    </footer>
+  </div>
+
+  <!-- VISTA PRIVADA (PANEL DE GESTIÓN PASTORAL) -->
+  <div id="vistaGestion" class="hidden">
+    <!-- Contenedor Principal -->
+    <div class="app-container">
+      
+      <!-- Detalle Pastoral Superior -->
+      <div class="pastoral-top-bar">
+        <div class="pastoral-top-title">
+          <span class="pastoral-cross-icon">✝</span>
+          <span class="pastoral-top-heading">Ministerio de Mayordomía • Supervisión Pastoral</span>
+        </div>
+        <div class="pastoral-top-right">
+          <span id="pastoralFechaHoy" class="pastoral-date-chip">Hoy</span>
+          <button id="btnCerrarSesionTop" class="btn-pastoral-logout" title="Cerrar panel pastoral y regresar a la vista pública">
+            🔒 Volver a Vista Pública
+          </button>
+        </div>
+      </div>
+
+      <!-- Header Principal -->
+      <header class="app-header">
+        <div class="header-left">
+          <div class="church-logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+          </div>
+          <div>
+            <h1 class="header-title">Control de Bendición de la Manzana: Un Encuentro con Jesús</h1>
+            <p class="header-subtitle">
+              Gestión de compromisos y cuotas • <span class="badge-target">Meta: Junio 2027</span>
+            </p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button id="btnCerrarSesion" class="btn btn-danger-soft" title="Cerrar panel pastoral y regresar a la vista de congregación">
+            🔒 Volver a Vista Pública
+          </button>
+          <button id="btnRecargar" class="btn btn-secondary" title="Sincronizar con Google Sheets">
+            <svg class="icon-spin-target" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            Actualizar
+          </button>
+          <button id="btnAbrirModalHermano" class="btn btn-success" title="Registrar nuevo hermano o familia">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <line x1="19" y1="8" x2="19" y2="14"></line>
+              <line x1="22" y1="11" x2="16" y2="11"></line>
+            </svg>
+            Nuevo Hermano
+          </button>
+          <button id="btnAbrirModalNuevo" class="btn btn-primary" title="Registrar nuevo aporte o cuota">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Registrar Aporte
+          </button>
+        </div>
+      </header>
+
+    <!-- Navegación Principal por Pestañas (Apartados) -->
+    <nav class="main-tabs">
+      <button id="tabBtnHermanos" class="main-tab-btn active" data-tab="hermanos">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        Control de Hermanos
+      </button>
+      <button id="tabBtnHistorial" class="main-tab-btn" data-tab="historial">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+          <line x1="6" y1="12" x2="18" y2="12"></line>
+        </svg>
+        Historial de Pagos
+        <span id="badgeTotalPagos" class="tab-badge">0</span>
+      </button>
+      <button id="tabBtnTermometro" class="main-tab-btn" data-tab="termometro">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a5 5 0 0 1 5 5v7.27A6 6 0 1 1 6 17.27V7a5 5 0 0 1 5-5z"/>
+          <line x1="12" y1="7" x2="12" y2="13"/>
+        </svg>
+        🌡️ Termómetro
+      </button>
+    </nav>
+
+    <!-- APARTADO 1: CONTROL DE HERMANOS -->
+    <div id="seccionHermanos" class="tab-pane active">
+      <!-- Sección de Métricas / Dashboard Cards -->
+      <section class="metrics-grid">
+        <!-- Total Prometido -->
+        <div class="metric-card card-promised">
+          <div class="metric-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Total Prometido</span>
+            <h3 id="metricTotalPrometido" class="metric-value">S/ 0.00</h3>
+            <span class="metric-detail" id="metricTotalHermanos">0 compromisos registrados</span>
+          </div>
+        </div>
+
+        <!-- Total Recaudado -->
+        <div class="metric-card card-collected">
+          <div class="metric-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Total Recaudado</span>
+            <h3 id="metricTotalAportado" class="metric-value">S/ 0.00</h3>
+            <div class="progress-container">
+              <div class="progress-bar-bg">
+                <div id="progressBar" class="progress-bar-fill" style="width: 0%"></div>
+              </div>
+              <span id="metricPorcentaje" class="progress-text">0% alcanzado</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Saldo Restante -->
+        <div class="metric-card card-pending">
+          <div class="metric-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Saldo por Cobrar</span>
+            <h3 id="metricTotalSaldo" class="metric-value">S/ 0.00</h3>
+            <span class="metric-detail">Pendiente hasta Junio 2027</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Barra de Control: Buscador y Filtros -->
+      <section class="toolbar-section">
+        <div class="search-box">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="text" 
+            id="inputBusqueda" 
+            placeholder="Buscar hermano por nombre o apellido..." 
+            autocomplete="off"
+          >
+          <button id="btnClearSearch" class="btn-clear-search hidden" title="Limpiar búsqueda">&times;</button>
+        </div>
+
+        <div class="filter-group">
+          <button class="filter-btn active" data-filter="todos">Todos</button>
+          <button class="filter-btn" data-filter="pendiente">Pendientes</button>
+          <button class="filter-btn" data-filter="completado">Completados</button>
+        </div>
+
+        <div class="results-counter">
+          <span id="contadorResultados">Cargando...</span>
+        </div>
+      </section>
+
+      <!-- Tabla Principal de Control -->
+      <main class="table-card">
+        <!-- Spinner de carga -->
+        <div id="loadingState" class="loading-state">
+          <div class="spinner"></div>
+          <p>Cargando información de finanzas...</p>
+        </div>
+
+        <!-- Contenedor responsive para scroll horizontal -->
+        <div class="table-responsive">
+          <table id="tablaFinanzas" class="data-table">
+            <thead>
+              <tr>
+                <th>Hermano / Miembro</th>
+                <th class="text-right">Promesa Total</th>
+                <th class="text-right">Aportado</th>
+                <th class="text-right">Saldo Pendiente</th>
+                <th class="text-center">Progreso</th>
+                <th class="text-center">Cuota Sugerida</th>
+                <th class="text-center">Estado</th>
+                <th class="text-center">Acción</th>
+              </tr>
+            </thead>
+            <tbody id="tablaCuerpo">
+              <!-- Inyectado dinámicamente con JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Estado vacío cuando no hay resultados en la búsqueda -->
+        <div id="emptyState" class="empty-state hidden">
+          <div class="empty-icon">🔍</div>
+          <h4>No se encontraron hermanos</h4>
+          <p>Intenta con otro término de búsqueda o limpia el filtro actual.</p>
+        </div>
+      </main>
+    </div>
+
+    <!-- APARTADO 3: TERMÓMETRO DE AVANCE -->
+    <div id="seccionTermometro" class="tab-pane hidden">
+
+      <!-- Chip de cuenta regresiva -->
+      <div class="termometro-countdown-bar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span id="termChip">Calculando meses restantes...</span>
+      </div>
+
+      <!-- Gráfico de Dona + Estadísticas -->
+      <div class="termometro-main">
+
+        <!-- Dona SVG -->
+        <div class="dona-wrap">
+          <svg class="dona-svg" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+            <!-- Pista de fondo -->
+            <circle class="dona-track" cx="110" cy="110" r="88" fill="none" stroke-width="22"/>
+            <!-- Arco de progreso -->
+            <circle id="donaArco" class="dona-arco" cx="110" cy="110" r="88" fill="none" stroke-width="22"
+              stroke-dasharray="553 553"
+              stroke-dashoffset="553"
+              transform="rotate(-90 110 110)"/>
+          </svg>
+          <!-- Texto central -->
+          <div class="dona-centro">
+            <span id="donaPorcentaje" class="dona-pct">0%</span>
+            <span class="dona-label-inner">de la meta</span>
+          </div>
+        </div>
+
+        <!-- Panel de datos a la derecha -->
+        <div class="termometro-stats">
+          <h2 class="termometro-titulo">Termómetro de Avance</h2>
+          <p class="termometro-subtitulo">Vista congregacional · <em>Los nombres permanecen privados</em></p>
+
+          <div class="term-stat-grid">
+            <div class="term-stat-card term-stat-green">
+              <span class="term-stat-label">💰 Recaudado</span>
+              <span id="termTotalAportado" class="term-stat-value">S/ 0.00</span>
+            </div>
+            <div class="term-stat-card term-stat-orange">
+              <span class="term-stat-label">🎯 Meta Total</span>
+              <span id="termTotalMeta" class="term-stat-value">S/ 0.00</span>
+            </div>
+            <div class="term-stat-card term-stat-blue">
+              <span class="term-stat-label">⏳ Por Recaudar</span>
+              <span id="termSaldoTotal" class="term-stat-value">S/ 0.00</span>
+            </div>
+            <div class="term-stat-card term-stat-purple">
+              <span class="term-stat-label">👥 Compromisos</span>
+              <span id="termTotalHermanos" class="term-stat-value">0</span>
+            </div>
+          </div>
+
+          <!-- Barra de progreso grande -->
+          <div class="term-barra-wrap">
+            <div class="term-barra-bg">
+              <div id="termBarra" class="term-barra-fill" style="width:0%"></div>
+            </div>
+            <div class="term-barra-labels">
+              <span>S/ 0</span>
+              <span id="termBarraLabel">0% alcanzado · Meta: Junio 2027</span>
+              <span id="termMetaLabel">S/ 0</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- APARTADO 2: HISTORIAL DE PAGOS Y CUOTAS (NUEVO) -->
+    <div id="seccionHistorial" class="tab-pane hidden">
+      <!-- Métricas Resumen de Historial -->
+      <section class="metrics-grid">
+        <div class="metric-card card-collected">
+          <div class="metric-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+              <line x1="6" y1="12" x2="18" y2="12"></line>
+            </svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Total en Cuotas Cobradas</span>
+            <h3 id="pagosMetricTotal" class="metric-value">S/ 0.00</h3>
+            <span id="pagosMetricCount" class="metric-detail">0 pagos registrados</span>
+          </div>
+        </div>
+
+        <div class="metric-card card-promised">
+          <div class="metric-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Último Aporte Recibido</span>
+            <h3 id="pagosMetricUltimoMonto" class="metric-value">S/ 0.00</h3>
+            <span id="pagosMetricUltimoDetalle" class="metric-detail">Sin pagos recientes</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Barra de Filtros para Historial -->
+      <section class="toolbar-section">
+        <div class="search-box">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="text" 
+            id="inputBusquedaPagos" 
+            placeholder="Buscar por hermano, método o nota..." 
+            autocomplete="off"
+          >
+          <button id="btnClearSearchPagos" class="btn-clear-search hidden" title="Limpiar búsqueda">&times;</button>
+        </div>
+
+        <div class="filter-group">
+          <button class="filter-btn-pago active" data-metodo="todos">Todos</button>
+          <button class="filter-btn-pago" data-metodo="Efectivo">Efectivo</button>
+          <button class="filter-btn-pago" data-metodo="Yape / Plin">Yape / Plin</button>
+          <button class="filter-btn-pago" data-metodo="Transferencia">Transferencia</button>
+        </div>
+
+        <div class="results-counter">
+          <span id="contadorPagos">0 cuotas</span>
+        </div>
+      </section>
+
+      <!-- Tabla Principal de Pagos -->
+      <main class="table-card">
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Hermano / Miembro</th>
+                <th class="text-right">Monto Abonado</th>
+                <th class="text-center">Método de Pago</th>
+                <th>Observación / Nota</th>
+                <th class="text-center">Registro</th>
+              </tr>
+            </thead>
+            <tbody id="tablaPagosCuerpo">
+              <!-- Inyectado dinámicamente con JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Estado vacío para historial -->
+        <div id="pagosEmptyState" class="empty-state hidden">
+          <div class="empty-icon">💳</div>
+          <h4>No hay cuotas registradas en el historial</h4>
+          <p>Cada vez que registres un abono, aparecerá aquí con su fecha, método y nota.</p>
+        </div>
+      </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Ministerio de Finanzas & Mayordomía • <strong>"Control de Bendición: La Manzana"</strong></p>
+      <p class="footer-note">"Cada uno dé como propuso en su corazón: no con tristeza, ni por necesidad, porque Dios ama al dador alegre." — 2 Corintios 9:7</p>
+    </footer>
+
+    </div>
+  </div>
+
+  <!-- Modal de Registro de Aportes -->
+  <div id="modalAporte" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-header-text">
+          <h2 id="modalTitulo" class="modal-title">Registrar Nuevo Aporte</h2>
+          <p class="modal-subtitle">Ingresa el monto para actualizar el saldo del compromiso</p>
+        </div>
+        <button id="btnCerrarModal" class="btn-close-modal" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <form id="formAporte" class="modal-form">
+        <!-- Selector de Hermano -->
+        <div class="form-group">
+          <label for="selectHermano" class="form-label">
+            Hermano / Miembro <span class="required">*</span>
+          </label>
+          <select id="selectHermano" class="form-control" required>
+            <option value="" disabled selected>-- Selecciona un hermano --</option>
+          </select>
+          <small id="infoSaldoHermano" class="form-help-text"></small>
+        </div>
+
+        <!-- Fila de Monto y Fecha -->
+        <div class="form-row">
+          <div class="form-group col-half">
+            <label for="inputMonto" class="form-label">
+              Monto a Abonar (S/) <span class="required">*</span>
+            </label>
+            <div class="input-prefix-wrapper">
+              <span class="input-prefix">S/</span>
+              <input 
+                type="number" 
+                id="inputMonto" 
+                class="form-control with-prefix" 
+                placeholder="0.00" 
+                step="0.50" 
+                min="0.50" 
+                required
+              >
+            </div>
+          </div>
+
+          <div class="form-group col-half">
+            <label for="inputFecha" class="form-label">
+              Fecha del Aporte <span class="required">*</span>
+            </label>
+            <input 
+              type="date" 
+              id="inputFecha" 
+              class="form-control" 
+              required
+            >
+          </div>
+        </div>
+
+        <!-- Método de Pago -->
+        <div class="form-group">
+          <label for="selectMetodo" class="form-label">Método de Pago</label>
+          <select id="selectMetodo" class="form-control">
+            <option value="Efectivo">Efectivo en Sobre</option>
+            <option value="Yape / Plin">Yape / Plin</option>
+            <option value="Transferencia Bancaria">Transferencia Bancaria</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+
+        <!-- Notas / Observaciones -->
+        <div class="form-group">
+          <label for="inputObservacion" class="form-label">Notas u Observaciones (Opcional)</label>
+          <input 
+            type="text" 
+            id="inputObservacion" 
+            class="form-control" 
+            placeholder="Ej: Cuota de mayo, Nro de operación 1234..."
+          >
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="modal-footer">
+          <button type="button" id="btnCancelarModal" class="btn btn-secondary">Cancelar</button>
+          <button type="submit" id="btnGuardarAporte" class="btn btn-primary">
+            <span class="btn-text">Guardar Aporte</span>
+            <span class="btn-spinner hidden"></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de Nuevo Hermano -->
+  <div id="modalNuevoHermano" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalHermanoTitulo">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-header-text">
+          <h2 id="modalHermanoTitulo" class="modal-title">Registrar Nuevo Hermano</h2>
+          <p class="modal-subtitle">Añadir un nuevo miembro o familia al pacto de bendición</p>
+        </div>
+        <button id="btnCerrarModalHermano" class="btn-close-modal" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <form id="formNuevoHermano" class="modal-form">
+        <!-- Nombre del hermano -->
+        <div class="form-group">
+          <label for="inputNuevoNombre" class="form-label">
+            Nombre Completo o Familia <span class="required">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="inputNuevoNombre" 
+            class="form-control" 
+            placeholder="Ej: Familia Morales o Hno. Samuel Castillo" 
+            required
+            autocomplete="off"
+          >
+        </div>
+
+        <!-- Promesa Total y Aporte Inicial -->
+        <div class="form-row">
+          <div class="form-group col-half">
+            <label for="inputNuevaPromesa" class="form-label">
+              Promesa Total (S/) <span class="required">*</span>
+            </label>
+            <div class="input-prefix-wrapper">
+              <span class="input-prefix">S/</span>
+              <input 
+                type="number" 
+                id="inputNuevaPromesa" 
+                class="form-control with-prefix" 
+                placeholder="0.00" 
+                step="1" 
+                min="1" 
+                required
+              >
+            </div>
+          </div>
+
+          <div class="form-group col-half">
+            <label for="inputNuevoAportado" class="form-label">
+              Aporte Inicial (S/)
+            </label>
+            <div class="input-prefix-wrapper">
+              <span class="input-prefix">S/</span>
+              <input 
+                type="number" 
+                id="inputNuevoAportado" 
+                class="form-control with-prefix" 
+                placeholder="0.00" 
+                step="0.50" 
+                min="0" 
+                value="0"
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Observación / Contacto -->
+        <div class="form-group">
+          <label for="inputNuevoDetalle" class="form-label">Notas o Contacto (Opcional)</label>
+          <input 
+            type="text" 
+            id="inputNuevoDetalle" 
+            class="form-control" 
+            placeholder="Ej: Teléfono 987654321 / Compromiso en cuotas..."
+          >
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="modal-footer">
+          <button type="button" id="btnCancelarModalHermano" class="btn btn-secondary">Cancelar</button>
+          <button type="submit" id="btnGuardarNuevoHermano" class="btn btn-success">
+            <span class="btn-text">Registrar Hermano</span>
+            <span class="btn-spinner hidden"></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de Editar Hermano -->
+  <div id="modalEditarHermano" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalEditarTitulo">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-header-text">
+          <h2 id="modalEditarTitulo" class="modal-title">Modificar Hermano</h2>
+          <p class="modal-subtitle">Actualiza los datos del hermano o su promesa de fe</p>
+        </div>
+        <button id="btnCerrarModalEditar" class="btn-close-modal" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <form id="formEditarHermano" class="modal-form">
+        <!-- Nombre original para buscar en la hoja -->
+        <input type="hidden" id="inputEditarNombreOriginal">
+
+        <div class="form-group">
+          <label for="inputEditarNombre" class="form-label">
+            Nombre Completo o Familia <span class="required">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="inputEditarNombre" 
+            class="form-control" 
+            required
+            autocomplete="off"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="inputEditarPromesa" class="form-label">
+            Promesa Total (S/) <span class="required">*</span>
+          </label>
+          <div class="input-prefix-wrapper">
+            <span class="input-prefix">S/</span>
+            <input 
+              type="number" 
+              id="inputEditarPromesa" 
+              class="form-control with-prefix" 
+              placeholder="0.00" 
+              step="1" 
+              min="1" 
+              required
+            >
+          </div>
+          <small id="infoEditarSaldo" class="form-help-text"></small>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="btnCancelarModalEditar" class="btn btn-secondary">Cancelar</button>
+          <button type="submit" id="btnGuardarEditarHermano" class="btn btn-primary">
+            <span class="btn-text">Guardar Cambios</span>
+            <span class="btn-spinner hidden"></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de Confirmación para Eliminar Hermano -->
+  <div id="modalConfirmarEliminar" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="confirmEliminarTitulo">
+    <div class="modal-dialog modal-dialog-sm">
+      <div class="modal-confirm-body">
+        <div class="confirm-icon-wrap">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            <line x1="10" y1="11" x2="10" y2="17"></line>
+            <line x1="14" y1="11" x2="14" y2="17"></line>
+          </svg>
+        </div>
+        <h3 id="confirmEliminarTitulo" class="confirm-title">¿Eliminar Hermano?</h3>
+        <p class="confirm-text">
+          ¿Estás seguro de que deseas eliminar a <strong id="nombreHermanoEliminar">...</strong> de la lista? Esta acción eliminará su registro y <strong>todo su historial de cuotas</strong> de Google Sheets.
+        </p>
+        <div class="modal-footer-center">
+          <button type="button" id="btnCancelarEliminar" class="btn btn-secondary">Cancelar</button>
+          <button type="button" id="btnConfirmarEliminar" class="btn btn-danger">
+            <span class="btn-text">Sí, Eliminar Todo</span>
+            <span class="btn-spinner hidden"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Confirmación para Eliminar Registro de Pago -->
+  <div id="modalConfirmarEliminarPago" class="modal-backdrop hidden" style="z-index: 1200;" role="dialog" aria-modal="true" aria-labelledby="confirmEliminarPagoTitulo">
+    <div class="modal-dialog modal-dialog-sm">
+      <div class="modal-confirm-body" style="padding: 24px; text-align: center;">
+        <div class="confirm-icon-wrap" style="width: 54px; height: 54px; border-radius: 50%; background-color: #fee2e2; color: #dc2626; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            <line x1="10" y1="11" x2="10" y2="17"></line>
+            <line x1="14" y1="11" x2="14" y2="17"></line>
+          </svg>
+        </div>
+        <h3 id="confirmEliminarPagoTitulo" class="confirm-title" style="font-size: 1.2rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">¿Eliminar Registro de Pago?</h3>
+        <p class="confirm-text" style="font-size: 0.925rem; color: var(--text-main); margin-bottom: 6px;">
+          ¿Estás seguro de que deseas eliminar este pago de <strong id="pagoEliminarMonto" style="color: #dc2626;">S/ 0.00</strong> de <strong id="pagoEliminarHermano">...</strong>?
+        </p>
+        <p class="confirm-subtext" style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 20px;">
+          Esta acción descontará el monto del acumulado del hermano y se sincronizará con Google Sheets.
+        </p>
+        <div class="modal-footer-center" style="display: flex; gap: 12px; justify-content: center;">
+          <button type="button" id="btnCancelarEliminarPago" class="btn btn-secondary">Cancelar</button>
+          <button type="button" id="btnConfirmarEliminarPago" class="btn btn-danger">
+            <span class="btn-text">Sí, Eliminar Pago</span>
+            <span class="btn-spinner hidden"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Historial de Aportes -->
+  <div id="modalHistorialAportes" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="historialTitulo">
+    <div class="modal-dialog modal-dialog-lg">
+      <div class="modal-header">
+        <div class="modal-header-text">
+          <h2 id="historialTitulo" class="modal-title">Historial de Aportes</h2>
+          <p id="historialSubtitulo" class="modal-subtitle">Detalle de abonos y cuotas registradas</p>
+        </div>
+        <button id="btnCerrarModalHistorial" class="btn-close-modal" aria-label="Cerrar modal">&times;</button>
+      </div>
+
+      <!-- Resumen rápido superior -->
+      <div class="history-summary-bar">
+        <div class="history-summary-item">
+          <span class="history-summary-label">Promesa Total</span>
+          <span id="historialPromesa" class="history-summary-value">S/ 0.00</span>
+        </div>
+        <div class="history-summary-item">
+          <span class="history-summary-label">Total Aportado</span>
+          <span id="historialAportado" class="history-summary-value val-paid">S/ 0.00</span>
+        </div>
+        <div class="history-summary-item">
+          <span class="history-summary-label">Saldo Pendiente</span>
+          <span id="historialSaldo" class="history-summary-value val-due">S/ 0.00</span>
+        </div>
+      </div>
+
+      <!-- Tabla de Aportes -->
+      <div class="history-table-wrap">
+        <!-- Spinner de carga interno -->
+        <div id="historialLoading" class="loading-state">
+          <div class="spinner"></div>
+          <p>Consultando aportes en Google Sheets...</p>
+        </div>
+
+        <!-- Tabla -->
+        <table id="tablaHistorial" class="history-table hidden">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th class="text-right">Monto</th>
+              <th>Método</th>
+              <th>Nota / Observación</th>
+              <th class="text-center">Acción</th>
+            </tr>
+          </thead>
+          <tbody id="historialCuerpo">
+            <!-- Inyectado dinámicamente -->
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>Total Registrado</td>
+              <td id="historialTotalSuma" class="text-right val-paid">S/ 0.00</td>
+              <td colspan="3"></td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <!-- Estado vacío si no hay aportes aún -->
+        <div id="historialVacio" class="history-empty hidden">
+          <div class="history-empty-icon">📖</div>
+          <h4>Sin aportes registrados</h4>
+          <p>Este hermano aún no tiene abonos registrados en la pestaña Aportes.</p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" id="btnCerrarHistorialFooter" class="btn btn-secondary">Cerrar</button>
+        <button type="button" id="btnAbonarDesdeHistorial" class="btn btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          Registrar Nuevo Abono
+        </button>
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- ===== Modal de Éxito / Comprobante WhatsApp ===== -->
+  <div id="modalExito" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="exitoTitulo">
+    <div class="modal-dialog modal-dialog-sm modal-exito-dialog">
+
+      <!-- Badge de éxito -->
+      <div class="exito-icon-wrap">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+
+      <h2 id="exitoTitulo" class="exito-titulo">¡Aporte Registrado!</h2>
+      <p class="exito-subtitulo">El aporte ha sido guardado exitosamente en Google Sheets.</p>
+
+      <!-- Tarjeta de resumen -->
+      <div class="exito-card">
+        <div class="exito-row">
+          <span class="exito-label">👤 Hermano/a</span>
+          <span id="reciboNombre" class="exito-value exito-nombre">—</span>
+        </div>
+        <div class="exito-row">
+          <span class="exito-label">💵 Monto abonado</span>
+          <span id="reciboMonto" class="exito-value exito-monto">S/ 0.00</span>
+        </div>
+        <div class="exito-row">
+          <span class="exito-label">🕐 Saldo pendiente</span>
+          <span id="reciboSaldo" class="exito-value exito-saldo">S/ 0.00</span>
+        </div>
+      </div>
+
+      <!-- Acciones -->
+      <div class="exito-actions">
+        <a id="btnWhatsapp" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+          <!-- Ícono WhatsApp -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.99.574 3.846 1.564 5.417L2.046 22l4.703-1.498A9.95 9.95 0 0 0 12 22c5.523 0 10-4.477 10-10S17.522 2 11.999 2zm0 18.18a8.175 8.175 0 0 1-4.163-1.138l-.298-.177-3.08.98.916-3.182-.194-.31A8.18 8.18 0 1 1 12 20.18z"/>
+          </svg>
+          Compartir Recibo por WhatsApp
+        </a>
+        <button type="button" class="btn btn-secondary" onclick="cerrarModalExito()">Cerrar</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal de PIN de Seguridad Pastoral (#modalPin) -->
+  <div id="modalPin" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalPinTitulo">
+    <div class="modal-dialog modal-dialog-sm modal-pin-dialog">
+      <div class="modal-header modal-header-center">
+        <div class="pin-shield-icon">🔐</div>
+        <h2 id="modalPinTitulo" class="modal-title">Acceso Pastoral</h2>
+        <p class="modal-subtitle">Ingresa la clave de acceso de 6 dígitos para ingresar al panel administrativo.</p>
+      </div>
+
+      <form id="formPin" class="modal-form" onsubmit="event.preventDefault();">
+        <div class="pin-input-wrap">
+          <input 
+            type="password" 
+            id="inputPin" 
+            class="form-control pin-input-field" 
+            placeholder="••••••" 
+            maxlength="6" 
+            inputmode="numeric" 
+            pattern="[0-9]*" 
+            autocomplete="off"
+            required
+          >
+        </div>
+        <p id="pinErrorMsg" class="pin-error-text hidden">⚠️ Clave incorrecta. Inténtalo de nuevo.</p>
+
+        <div class="modal-footer-pin">
+          <button type="button" id="btnCancelarPin" class="btn btn-secondary">Cancelar</button>
+          <button type="submit" id="btnIngresarPin" class="btn btn-primary">
+            <span>Ingresar al Panel</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Vinculación del script Javascript -->
+  <script src="JS/script.js"></script>
+</body>
+</html>
