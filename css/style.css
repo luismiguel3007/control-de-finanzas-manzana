@@ -68,6 +68,14 @@
   padding: 0;
 }
 
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-app);
@@ -2739,3 +2747,391 @@ body.tema-solemne .public-footer-note {
   color: #64748B;
 }
 
+/* ==========================================================================
+   SOLUCIÓN INTEGRAL RESPONSIVE Y MOBILE-FIRST (PANTALLAS <= 640px)
+   ========================================================================== */
+
+/* 1. Control estricto de Viewport, Anchos y Paddings Móviles */
+@media (max-width: 640px) {
+  *, *::before, *::after {
+    box-sizing: border-box !important;
+  }
+
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body {
+    padding: 10px 8px !important;
+  }
+
+  .public-view,
+  #vistaGestion,
+  .app-container,
+  .public-content,
+  .table-card,
+  .metric-card,
+  .toolbar-section,
+  .public-thermometer-section,
+  .verse-card,
+  .public-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .app-container {
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+    gap: 14px !important;
+  }
+
+  .public-content {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-top: 20px !important;
+    padding-bottom: 24px !important;
+    gap: 20px !important;
+  }
+
+  .public-header {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+  }
+
+  .public-brand {
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .public-header-controls {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .public-header-controls .btn-theme-toggle,
+  .public-header-controls .btn-pastoral-access {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 9px 8px !important;
+    font-size: 0.8rem !important;
+    white-space: nowrap !important;
+  }
+
+  /* 2. Encabezado y Títulos Flexibles (Sin cortes de texto ni elipsis) */
+  h1, h2, h3, h4,
+  .header-title,
+  .public-title,
+  .main-title,
+  .church-title,
+  .termometro-titulo,
+  .modal-title,
+  .exito-titulo {
+    font-size: 1.15rem !important;
+    line-height: 1.35 !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    text-overflow: clip !important;
+    text-align: center !important;
+  }
+
+  .header-subtitle,
+  .public-subtitle,
+  .modal-subtitle,
+  .termometro-subtitulo {
+    font-size: 0.8rem !important;
+    line-height: 1.4 !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    text-align: center !important;
+  }
+
+  .header-info,
+  .badge-meta,
+  .badge-target,
+  .public-badge-meta {
+    font-size: 0.75rem !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+
+  /* Barra de Supervisión Pastoral Superior */
+  .pastoral-top-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 12px 14px !important;
+    gap: 10px !important;
+  }
+
+  .pastoral-top-title {
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .pastoral-top-heading {
+    font-size: 0.8rem !important;
+    text-align: center !important;
+    white-space: normal !important;
+  }
+
+  .pastoral-top-right {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .pastoral-date-chip {
+    text-align: center !important;
+    font-size: 0.75rem !important;
+  }
+
+  .btn-pastoral-logout {
+    width: 100% !important;
+    text-align: center !important;
+    padding: 8px !important;
+  }
+
+  /* Header del Panel de Control */
+  .app-header {
+    padding: 14px 12px !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+  }
+
+  .header-left {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 10px !important;
+  }
+
+  /* 3. Barra de Botones de Acción (Cuadrícula compacta de 2 columnas) */
+  .action-bar,
+  .header-actions,
+  .admin-controls-bar {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .action-bar button,
+  .action-bar .btn,
+  .header-actions button,
+  .header-actions .btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 10px 8px !important;
+    font-size: 0.8rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+
+  /* 4. Pestañas de Navegación (Deslizamiento horizontal táctil suave) */
+  .main-tabs,
+  .tabs-wrapper,
+  .nav-tabs,
+  .tabs-container {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 8px !important;
+    padding: 6px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    scrollbar-width: none !important;
+  }
+
+  .main-tabs::-webkit-scrollbar,
+  .tabs-wrapper::-webkit-scrollbar,
+  .nav-tabs::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .main-tab-btn,
+  .tab-btn,
+  .nav-tab {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    font-size: 0.82rem !important;
+    padding: 8px 14px !important;
+  }
+
+  /* 5. Tarjetas de Métricas (Dashboard) */
+  .metrics-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .metric-card {
+    width: 100% !important;
+    padding: 16px 14px !important;
+  }
+
+  .metric-value {
+    font-size: 1.4rem !important;
+    line-height: 1.2 !important;
+    word-break: break-all !important;
+  }
+
+  .public-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .public-card {
+    padding: 18px 14px !important;
+    gap: 14px !important;
+  }
+
+  .public-card-icon {
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 1.6rem !important;
+  }
+
+  .public-card-val {
+    font-size: 1.4rem !important;
+  }
+
+  /* 6. Barra de Búsqueda y Filtros del Panel */
+  .toolbar-section {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .search-box {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .filter-group {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    justify-content: center !important;
+    gap: 6px !important;
+  }
+
+  .filter-btn,
+  .filter-btn-pago {
+    flex: 1 1 auto !important;
+    text-align: center !important;
+    padding: 8px 10px !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* 7. Tablas con Scroll Horizontal Táctil */
+  .table-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .table-responsive,
+  .table-wrapper,
+  .history-table-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    display: block !important;
+  }
+
+  .data-table,
+  .history-table {
+    min-width: 580px !important;
+    width: 100% !important;
+  }
+
+  /* 8. Modales Emergentes */
+  .modal-dialog,
+  .modal-content,
+  .modal-dialog-sm,
+  .modal-exito-dialog,
+  .modal-pin-dialog {
+    width: calc(100% - 24px) !important;
+    max-width: 100% !important;
+    margin: 12px auto !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    padding: 16px !important;
+    box-sizing: border-box !important;
+  }
+
+  .form-row {
+    flex-direction: column !important;
+  }
+
+  .col-half {
+    width: 100% !important;
+  }
+
+  .modal-footer {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .modal-footer button,
+  .modal-footer .btn {
+    width: 100% !important;
+  }
+
+  /* Termómetro de Avance en Móvil */
+  .public-thermometer-section {
+    padding: 20px 14px !important;
+  }
+
+  .thermometer-giant-track {
+    height: 38px !important;
+  }
+
+  .thermometer-labels-public {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 6px !important;
+    text-align: center !important;
+  }
+
+  .verse-card {
+    padding: 20px 14px 16px !important;
+  }
+
+  .verse-text {
+    font-size: 0.95rem !important;
+  }
+
+  .verse-controls {
+    width: 100% !important;
+  }
+
+  .btn-verse-next {
+    width: 100% !important;
+    text-align: center !important;
+  }
+}
